@@ -9,8 +9,28 @@
 seesion登录状态保留
 
 
+#### 截图
+
+##### 答题端
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/1.png?raw=true)
+
+##### 管理端
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/2.png?raw=true)
 
 
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/3.png?raw=true)
+
+
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/4.png?raw=true)
+
+
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/5.png?raw=true)
+
+
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/6.png?raw=true)
+
+
+![](https://github.com//li17324910702/Online-answering-system/blob/master/img/7.png?raw=true)
 #### 组织结构
 
 ```
