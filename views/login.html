@@ -1,0 +1,72 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>登录</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/public/css/signin.css" rel="stylesheet">
+
+</head>
+
+<body class="text-center">
+<form class="form-signin">
+
+    <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+
+    <label  class="sr-only">学号</label>
+    <input type="" class="form-control" placeholder="学号" required autofocus name="id">
+    <label for="inputPassword" class="sr-only">密码</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="密码" required name="password">
+    <div class="alert alert-danger" id="arlert_div" role="alert" hidden="true">
+        学号或者密码错误
+    </div>
+    <div class="checkbox mb-3">
+        <a class="btn btn-lg btn-primary btn-block" href="/register">注册</a>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
+</form>
+
+
+
+
+
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    $('.form-signin').on('submit',function (e) {
+        e.preventDefault()
+        var formData = $(this).serialize()
+        $.ajax({
+            url:'/login',
+            type:'post',
+            data:formData,
+            dataType:'json',
+            success:function (data) {
+                var err_code=data.err_code
+                if(err_code===2)
+                    $('#arlert_div').removeAttr('hidden')
+                else if(err_code===0)
+                    window.location.href = '/'
+
+            }
+
+
+        })
+
+    })
+
+
+
+</script>
+</body>
+
+</html>

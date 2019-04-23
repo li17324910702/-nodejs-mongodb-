@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zn-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>试题集</title>
+
+    <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
+
+</head>
+<body>
+
+
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">admin</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+<!--        <a class="p-2 text-dark" href="#">Features</a>-->
+<!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+<!--        <a class="p-2 text-dark" href="#">Support</a>-->
+<!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
+        <button type="button" class="btn btn-primary btn " data-toggle="modal" data-target="#myModal">
+            添加试题
+        </button>
+
+    </nav>
+    <a class="btn btn-outline-primary" href="#">查看学生分数</a>
+</div>
+
+<div class="container-fluid">
+
+<div class="d-flex flex-wrap justify-content-around ">
+<!-- 展开页 -->
+
+{{ each problems }}
+
+<div class="card" style="width: 18rem;margin-top: 2rem" >
+    <div class="card-body">
+        <h5 class="card-title "> <span>题目{{ $index+1 }}.</span> <span class={{ $value._id+"problem" }}>{{ $value.problem }}</span></h5>
+        <p class="card-text"></p>
+    </div>
+
+    <ul class= "list-group list-group-flush" id={{$value._id+'1'}} }}>
+
+        <li class="list-group-item{{ if $value.values ==1 }} bg-success{{ /if }}" ><span>A:</span><span class={{ $value._id+"A" }}>{{ $value.A }}</span></li>
+
+
+        <li class="list-group-item{{ if $value.values ==2 }} bg-success{{ /if }}" ><span>B:</span><span class={{ $value._id+"B" }}>{{ $value.B }}</span></li>
+
+
+
+        <li class="list-group-item{{ if $value.values ==3 }} bg-success{{ /if }}" ><span>C:</span><span class={{ $value._id+"C" }}>{{ $value.C }}</span></li>
+
+
+        <li class="list-group-item{{ if $value.values ==4 }} bg-success{{ /if }}" ><span>D:</span><span class={{ $value._id+"D" }}>{{ $value.D }}</span></li>
+
+    </ul>
+    <div class="card-body">
+
+        <button class='updata_button  btn btn-primary' href="admin?id={{ $value._id}}" id= {{ $value._id }}  type="button"  data-toggle="modal" data-target="#myModal1" >
+            修改
+        </button>
+        <a href="admin/delete?_id={{$value._id }}" class="card-link btn btn-danger" >删除</a>
+    </div>
+</div>
+{{/each}}
+
+</div>
+
+
+</div>
+
+<!--添加学生展开页-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <form id="problem_form" >
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container ">
+
+                        <div class="row">
+                            <div class="form-group container-fluid" >
+                                <textarea class="form-control col" rows="3" placeholder="请输入试题" name="problem" required="required" class="form-control"></textarea>
+                            </div>
+                            <div class="container-fluid">
+                                请在以下选框中勾选一个正确答案
+                            </div>
+                            <div class="form-group container-fluid">
+                                <input type="radio" name="values" id="inlineRadio1" value="1" checked="checked">
+                                <input  rows="3"   class="form-control" placeholder="A" name="A" required="required" >
+
+                                </input>
+                            </div>
+
+                            <div class="form-group container-fluid">
+
+                                <input type="radio" name="values" id="inlineRadio2" value="2" >
+                                <input class="form-control"  placeholder="B" name="B" required="required">
+                                </input>
+                            </div>
+                            <div class="form-group container-fluid">
+                                <input type="radio" name="values" id="inlineRadio3" value="3">
+                                <input class="form-control"  placeholder="C" name="C" required="required">
+
+                                </input>
+                            </div>
+                            <div class="form-group container-fluid">
+                                <input type="radio" name="values" id="inlineRadio4" value="4">
+                                <input class="form-control"  placeholder="D " name="D" required="required">
+
+                                </input>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-default" onclick="">确认</button>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+
+
+<!--修改学生展开页-->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <form id="problem_form1"  method="get" action="admin/edit">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container ">
+
+                        <div class="row">
+                            <div class="form-group container-fluid" >
+                                <textarea type="text" id="textarea1" rows="3" class="form-control col"  name="problem" required="required" class="form-control">
+
+                                </textarea>
+                            </div>
+                            <div class="container-fluid">
+                                请在以下选框中勾选一个正确答案
+                            </div>
+                            <input type="hidden" id="hideen_input" name="_id">
+                            <div class="form-group container-fluid">
+                                <input type="radio" name="values" id="inlineRadio11" value="1" >
+                                <input class="form-control inputA"  name="A" required="required" >
+                                </input>
+                            </div>
+
+                            <div class="form-group container-fluid">
+
+                                <input type="radio" name="values" id="inlineRadio22" value="2" >
+                                <input class="form-control inputB"   name="B" required="required">
+                                </input>
+                            </div>
+                            <div class="form-group container-fluid">
+                                <input type="radio" name="values" id="inlineRadio33" value="3" >
+                                <input class="form-control inputC"  name="C" required="required">
+
+                                </input>
+                            </div>
+                            <div class="form-group container-fluid">
+                                <input type="radio" name="values" id="inlineRadio44" value="4" >
+                                <input class="form-control inputD"   name="D" required="required">
+
+                                </input>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-default" onclick="">确认</button>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+
+<script src="/public/bootstrap/js/bootstrap.min.js"> </script>
+<script>
+    $('#problem_form').on('submit',function (e) {
+        e.preventDefault()
+        var formData = $(this).serialize()
+        $.ajax({
+            url: '/admin/new',
+            type: 'get',
+            data: formData,
+            dataType: 'json',
+            success:function (data) {
+                console.log(data.err_code)
+                if(data.err_code===0)
+                    window.location.href = '/admin'
+            }
+        })
+    })
+
+    $('.updata_button').on('click',function () {
+        var class_id=this.id   //获取表单
+        class_id=class_id.replace(/"/g,'')
+        var
+            problem='.'+class_id+'problem'
+            A='.'+class_id+'A'
+            B='.'+class_id+'B'
+            C='.'+class_id+'C'
+            D='.'+class_id+'D'
+            ul='#'+class_id+'1'+' .bg-success'
+        var right_answer= parseInt($(ul).attr('name'))
+        problem=$(problem).text()
+        A=$(A).text()
+        B=$(B).text()
+        C=$(C).text()
+        D=$(D).text()
+        // console.log(problem)
+        $('#textarea1').text(problem)
+        $('.inputA').attr('value',A)
+        $('.inputB').attr('value',B)
+        $('.inputC').attr('value',C)
+        $('.inputD').attr('value',D)
+        $('#hideen_input').attr('value',class_id)
+
+
+        var radio
+        if(right_answer===1) radio='inlineRadio11'
+            else if(right_answer===2) radio='inlineRadio22'
+                else if (right_answer===3) radio='inlineRadio33'
+                    else radio='inlineRadio44'
+        console.log(radio)
+        $('#'+radio).attr('checked',"checked")
+
+    })
+</script>
+
+
+
+</body>
+</html>
+

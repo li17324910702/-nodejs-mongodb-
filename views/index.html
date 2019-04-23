@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zn-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>答题</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/public/css/bd.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">答题系统</h5>
+
+
+
+
+
+{{ if name }}
+    <a class="p-2 text-dark">你好,{{ name }}</a>
+    <a class="p-2 text-dark" href="/loginout">退出登录</a>
+    <a class="btn btn-outline-primary" href="/student">查看分数</a>
+{{ else }}
+    <a class="p-2 text-dark" href="/register">注册</a>
+    <a class="btn btn-outline-primary" href="/login">登录</a>
+{{/if}}
+</div>
+
+<div class="row">
+<div class="d-flex flex-wrap justify-content-around  col-md-9">
+{{ each data }}
+<div class="card" style="width: 18rem;margin-top: 2rem" id="{{ $index }}">
+    <div class="card-body">
+        <h5 class="card-title "> <span>题目{{ $index+1 }}.{{ $value.problem }}</span></h5>
+        <p class="card-text"></p>
+    </div>
+
+    <ul class= "list-group list-group-flush" id={{ $value._id+'_all' }} >
+
+        <li class="list-group-item " id= {{ $value._id+'_1' }} >A: {{ $value.A }}</li>
+
+        <li class="list-group-item" id= {{ $value._id+'_2' }} >B: {{ $value.B }}</li>
+
+        <li class="list-group-item" id= {{ $value._id+'_3' }} >C: {{ $value.C }}</li>
+
+        <li class="list-group-item" id= {{ $value._id+'_4' }} >D: {{ $value.D }}</li>
+
+    </ul>
+
+
+
+</div>
+
+{{/each}}
+
+
+</div>
+<div class=" d-xl-block col-xl-1 bd-toc">
+
+    <nav class=" nav ">
+
+        <ul >
+            {{ each data }}
+            <a href="#{{ $index }}"   id= {{ $value._id+'_id' }} class="btn btn-sm" style="margin-bottom: 0.1rem" >{{$index+1}}</a>
+
+            {{/each}}
+            <br>
+            <button type="button" class=" btn-primary btn" id="click">提交</button>
+        </ul>
+
+
+    </nav>
+
+
+    </div>
+
+
+
+</body>
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    var answer={}
+    $('.list-group-item').on('click',function () {
+        arr=this.id.split('_')
+        answer[arr[0]]=arr[1]
+        $("#"+arr[0]+"_all").children().removeClass('bg-success')
+        $(this).addClass('bg-success')
+        $('#'+arr[0]+'_id').addClass('btn-success')
+    })
+
+    $('#click').on('click',function () {
+        console.log(answer)
+        $.ajax({
+            url: '/commit',
+            type: 'post',
+            data: answer,
+            dataType: 'json',
+            success:function (data) {
+                console.log(data.err_code)
+                if (data.err_code === 0)
+                    window.location.href = '/student'
+            }
+        })
+
+    })
+</script>
+
+</html>

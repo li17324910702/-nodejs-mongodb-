@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/public/css/signin.css" rel="stylesheet">
+
+</head>
+
+<body class="text-center">
+<form class="form-signin" >
+
+
+    <h1 class="h3 mb-3 font-weight-normal">注册</h1>
+    <label class="sr-only">姓名</label>
+    <input class="form-control" placeholder="姓名" required autofocus name="name">
+    <br>
+    <label class="sr-only">学号</label>
+    <input class="form-control" placeholder="学号" required autofocus name="id">
+
+    <br>
+
+    <div class="alert alert-danger" id="arlert_div1" role="alert" hidden="true">
+            学号已存在
+    </div>
+    <label for="inputPassword" class="sr-only">密码</label>
+
+    <input type="password" id="inputPassword" class="form-control" placeholder="密码" required name="password">
+
+    <label for="inputPassword" class="sr-only">第二次密码</label>
+
+
+    <input type="password" id="inputPassword2" class="form-control" placeholder="请确认" required>
+    <div class="alert alert-danger" id="arlert_div" role="alert" hidden="true">
+        两次密码不一致
+    </div>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me" checked> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
+</form>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+
+    $('#inputPassword2').on('input',function () {
+
+        if($('#inputPassword2').val()!==$('#inputPassword').val()){
+
+            $('#arlert_div').removeAttr('hidden')
+        }else{
+            $('#arlert_div').attr('hidden','true')
+
+        }
+    })
+    $('.form-signin').on('submit',function (e) {
+        e.preventDefault()
+        var formData = $(this).serialize()
+        if($('#inputPassword2').val()!==$('#inputPassword').val()){
+
+            $('#arlert_div').text("").removeAttr('hidden')
+        }
+        else{
+            $('#arlert_div').attr('hidden','true');
+            $.ajax({
+            url: '/register',
+            type: 'post',
+            data: formData,
+            dataType: 'json',
+            success:function (data) {
+                if(data.err_code===1) {
+
+                    $('#arlert_div1').removeAttr('hidden')
+                }
+                else if(data.err_code===0)
+                    window.location.href = '/'
+                }
+            })
+        }
+    })
+</script>
+
+
+</body>
+</html>
