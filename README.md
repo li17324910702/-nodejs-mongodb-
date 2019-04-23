@@ -39,10 +39,10 @@ seesion登录状态保留
 answer
 ├──  public       -- 公用资源
 ├──  views        --  art-template渲染界面文件目录 
-├── models        --  mongodb数据库接口
-├── app.js        --  app入口
+├──  models        --  mongodb数据库接口
+├──  app.js        --  app入口
 ├──  package-lock -- 依赖
-└── router.js     --  路由接口
+└──  router.js     --  路由接口
 ```
 
 #### 运行
